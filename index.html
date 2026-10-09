@@ -1,1 +1,71 @@
 <!-- Add your index page here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Missing Dog Mystery</title>
+    <script src="script.js" defer></script>
+
+</head>
+<body>
+    <h1>The Missing Dog Mystery</h1>
+    <figure>
+                <img src="dog.jpg" alt="dog image" width="100">
+            </figure>
+    <main>
+        <section>
+            <a href="about.html">About Me</a>
+            <h2>Backyard</h2>
+            <!-- description of location 1 -->
+            <p> You're enjoying a backyard party at your neighbor's house when someone notices that the family dog has gone missing! You start looking around in the backyard for clues as to where the dog could be. Where do you wanna start looking?</p>
+            <!-- image for locatio n 1 -->
+            <figure>
+                <img src="backyard.jpg" alt="backyard party" width="300">
+                <figcaption>The backyard where the dog went missing</figcaption>
+                <br>
+            </figure>
+        <form action="game.html" method = "get">
+            <!-- Asking for players name -->
+             <input type="text" id="playerName" name="playerName" placeholder="Enter your name">
+            <input type="submit" value="Submit">
+
+            <!-- Asking if the player is ready (radio input) -->
+            <h3>Are you ready to start looking for the dog?</h3>
+            <input type="radio" id="yes" name="ready" value="yes">
+            <label for="yes">Yes</label><br>
+            <input type="radio" id="no" name="ready" value="no">
+            <label for="no">No</label><br>
+            <input type="radio" id="not sure" name="ready" value="not sure">
+            <label for="not sure">Not sure</label>
+
+            <!-- player options (select tag)-->
+            <h4>What would you like to do?</h4>
+            <label for = "choices">Choose an option:</label>
+            <select name="choices" id="choices">
+                <option value="empty"> </option>
+                <option value="check gate">Check the open gate</option>
+                <option value="talk guests">Talk to te party guests</option>
+                <option value="Look around">Look around the backyard</option>
+            </select>
+            </form>
+        </section>
+        <br>
+        
+            <p><strong>Inventory</strong></p>
+            <ul>
+                <li>No items collected yet</li>
+            </ul>
+            <br>
+        <section>
+            <p><strong>Status</strong></p>
+            <ul>
+                <li>Dog found: False</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
+
+
+  
