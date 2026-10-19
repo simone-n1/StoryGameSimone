@@ -17,78 +17,140 @@ const scenes = {
   // See "backyard" for the first example
   backyard: {
     title: "Location: Backyard",
-    character: "Interviewee:Grandma",
-    text: "Text: well what I remember happening is that Darcie went inside to play with her pretend kitchen, I heard her neighbor mention he was really hungry, and the dog ran around really quickly",
+    character: "Dog Owner",
+    text: "My dog is missing! I last saw him running around the backyard. Can you help me look for him please?",
+    image: "backyard.jpg",
     // you can choose how many choices to include
     // each choice can have text, an action, and/or nextScene
     choices: [
       {
-        text: "Chase after the dog (-10 HP)",
+        text: "Check the open gate",
         action: function () {
-          updateHealth(-10);
+          updateClues(1);
         },
-        nextScene: "entrance"
+        nextScene: "house"
       },
       {
-        text: "Ask about the neighbor",
-        nextScene: "hallway"
+        text: "Talk to the party guest",
+        action: function () {
+          updateClues(1);
+        },
+        nextScene: "partyGuest"
       },
-      {
-          text: "Pick up the brass key",
-          action: function () {
-            pickUpItem("brass key");
-          },
-          nextScene: "hallway"
-      }
     ]
   },
 
-  entrance: {
-    title: "Location: Entrance",
-    character: "Interviewee:Neighbor",
-    text: "well what I remember...",
+  partyGuest: {
+    title: "Location: Backyard",
+    character: "Party Guest",
+    text: "I saw the dog running around near the gate earlier, but I haven't seen him since.",
+    image: "backyard.jpg",
     choices: [
       {
-        text: "Ask about the dog",
-        nextScene: "backyard"
+        text: "Check the open gate",
+        action: function () {
+          updateClues(1);
+        },
+        nextScene: "house"
       },
          {
-        text: "Ask about the neighbor",
-        nextScene: "hallway"
+        text: "Go inside the house",
+        nextScene: "house"
       }
     ]
   },
 
-  hallway: {
-    title: "The Hallway",
-    text: "The hallway is dark and silent.",
+  house: {
+    title: "Location: House",
+    character: "Dog Owner",
+    text: "He loves treats! There should be some of his favorite treats in the kitchen if you want to bring a few with you on your search!",
+    image: "house.jpg",
     choices: [
       {
-        text: "backyard",
-        nextScene: "lockedDoor"
-      }
-    ]
-  },
-
-   lockedDoor: {
-    title: "The Locked Door",
-    text: "The door handle doesn't move.",
-    choices: [
-      {
-        text: "Try to open it",
-        action: unlockDoor
+        text: "Pick up the dog treats",
+        action: function() {
+          pickUpItem("Dog Treats");
+        },
+        nextScene: "neighborhood"
       },
       {
-        text: "Go back",
-        nextScene: "backyard"
+        text: "Leave the house",
+        nextScene: "neighborhood"
       }
     ]
   },
 
+   neighborhood: {
+    title: "Location: Neighborhood",
+    character: "",
+    text: "You look around the neighborhood and notice paw prints leading down the sidewalk.",
+    image: "neighborhood.jpg",
+    choices: [
+      {
+        text: "Follow the paw prints",
+        action: function () {
+          updateClues(1);
+        },
+        nextScene: "neighborHouse"
+      },
+      {
+        text: "Go to the neighbor's house",
+        nextScene: "neighborHouse"
+      }
+    ]
+  },
+
+  neighborHouse: {
+    title: "Location: Neighbor's House",
+    character: "Neighbor",
+    text: "I saw a dog run past my house a little while ago. I think he might have been headed towards the park.",
+    image: "neighbor's house.avif",
+    choices: [
+      {
+        text: "Check the neighbor's yard",
+        action: function () {
+          updateClues(1);
+        },
+        nextScene: "park"
+      },
+      {
+        text: "Go to the park",
+        nextScene: "park"
+      }
+    ]
+  },
+
+  park: {
+    title: "Location: Park",
+    character: "",
+    text: "You reach the park. The dog could be near the playground or maybe hiding in the bushes?",
+    image: "park.avif",
+    choices: [
+      {
+        text: "Look near the playground",
+        action: function () {
+          updateClues(1);
+          messageDisplay.textContent = "You find paw prints leading toward the bushes.";
+        }
+      },
+      {
+        text: "Look near the bushes",
+        action: findDog
+      },
+      {
+        text: "Go back to the house",
+        nextScene: "house"
+      }
+    ]
+  },
+
+
    solution: {
-    title: "The solution",
-    text: "You solved the mystery!",
-    
+    title: "Dog Found!",
+    character: "Dog Owner",
+    text: "You found him! Thank you so much for bringing him back!",
+    image: "dog.jpg",
+    choices: []
   }
 };
 
@@ -109,8 +171,9 @@ const scenes = {
 // and make the code harder to read
 const sceneTitle = document.getElementById("scene-title");
 const sceneText = document.getElementById("scene-text");
-const choicesContainer = document.getElementById("choices-container");
+const choicesContainer = document.getElementById("choices");
 const characterName = document.getElementById("character-name");
+const sceneImage = document.getElementById("scene-image");
 
 // Then, we create a function to update the scene,
 function updateScene(sceneName) {
@@ -126,9 +189,11 @@ function updateScene(sceneName) {
   sceneTitle.textContent = scene.title;
   sceneText.textContent = scene.text;
   characterName.textContent = scene.character;
+  sceneImage.src = scene.image;
 
   // Clear the old buttons before creating new ones
   choicesContainer.innerHTML = "";
+
 
   // Loop through each choice in the scene, connecting an action and nextScene if included
   scene.choices.forEach(function (choice) {
@@ -155,7 +220,7 @@ updateScene(currentScene);
 
 
 // --------------------------------------------------
-// HEALTH
+// CLUES FOUND
 // Read through the comments below to see what this section does
 //
 // TO CUSTOMIZE THIS SECTION
@@ -165,19 +230,19 @@ updateScene(currentScene);
 // --------------------------------------------------
 
 // Create a variable for health
-let health = 100;
+let cluesFound = 0;
 
 // Display current health
-const healthDisplay = document.getElementById("health-display");
+const cluesDisplay = document.getElementById("clues-display");
 
 // Create a function to update health 
-function updateHealth(amount) {
-  health += amount;
-  healthDisplay.textContent = health;
+function updateClues(amount) {
+  cluesFound += amount;
+  cluesDisplay.textContent = cluesFound;
 }
 
 // This refreshes the health display
-updateHealth(0);
+updateClues(0);
 
 // --------------------------------------------------
 // INVENTORY
@@ -208,11 +273,11 @@ function pickUpItem(itemName) {
 // --------------------------------------------------
 
 // Create a function that checks if the inventory contains one item and if so shows the win condition scene.
-function unlockDoor() {
-  if (inventory.includes("brass key")) {
+function findDog() {
+  if (inventory.includes("Dog Treats")) {
     updateScene("solution");
   } else {
-    messageDisplay.textContent = "The door is locked.";
+    messageDisplay.textContent = "The dog won't come out. Maybe you need to get some of his favorite treats from the house?";
   }
 }
 
