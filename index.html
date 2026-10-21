@@ -9,30 +9,26 @@
 
 </head>
 <body>
-    <h1>The Missing Dog Mystery</h1>
+    <h1 style="color: rgb(10, 89, 139); text-align:center; background-color: lightgray; border: dotted black 3px; padding-top: 1%; padding-bottom: 1%;">The Missing Dog Mystery</h1>
     <figure>
-                <img src="dog.jpg" alt="dog image" width="100">
+                <img src="dog.jpg" alt="dog image" width="200">
             </figure>
     <main>
         <section>
             <a href="about.html">About Me</a>
+            <br>
             <a href="game.html">Play the Game</a>
-            <h2>Backyard</h2>
+            <h2 style="font-style:oblique;">Home</h2>
             <!-- description of location 1 -->
-            <p> You're enjoying a backyard party at your neighbor's house when someone notices that the family dog has gone missing! You start looking around in the backyard for clues as to where the dog could be. Where do you wanna start looking?</p>
-            <!-- image for locatio n 1 -->
-            <figure>
-                <img src="backyard.jpg" alt="backyard party" width="300">
-                <figcaption>The backyard where the dog went missing</figcaption>
-                <br>
-            </figure>
+            <p style="letter-spacing: 5%;"> Welcome! Please fill out the info below and then click "Play the Game"!</p>
+            
         <form action="game.html" method = "get">
             <!-- Asking for players name -->
              <input type="text" id="playerName" name="playerName" placeholder="Enter your name">
             <input type="submit" value="Submit">
 
             <!-- Asking if the player is ready (radio input) -->
-            <h3>Are you ready to start looking for the dog?</h3>
+            <h3 style="word-spacing: 10%;">Are you ready to start looking for the dog?</h3>
             <input type="radio" id="yes" name="ready" value="yes">
             <label for="yes">Yes</label><br>
             <input type="radio" id="no" name="ready" value="no">
@@ -41,13 +37,13 @@
             <label for="not sure">Not sure</label>
 
             <!-- player options (select tag)-->
-            <h4>What would you like to do?</h4>
-            <label for = "choices">Choose an option:</label>
+            <h4 style="text-decoration: underline;">How much would you like to donate?</h4>
+            <label for = "choices" style="font-weight: bold;">Choose an option:</label>
             <select name="choices" id="choices">
                 <option value="empty"> </option>
-                <option value="check gate">Check the open gate</option>
-                <option value="talk guests">Talk to te party guests</option>
-                <option value="Look around">Look around the backyard</option>
+                <option value="1">$1</option>
+                <option value="5">$5</option>
+                <option value="10">$10</option>
             </select>
             </form>
         </section>
