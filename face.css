@@ -1,0 +1,52 @@
+body {
+    background-color: white;
+}
+
+#face {
+    width: 330px;
+    height: 400px;
+    background-color: yellow;
+    border: 2px solid black;
+    padding: 20px;
+}
+
+.eye {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    display: inline-block;
+    margin: 10px;
+}
+
+.pupil {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    margin: 25px;
+}
+
+#mouth {
+    width: 280px;
+    height: 180px;
+    background-color: black;
+    margin: 15px;
+    position: relative;
+}
+
+.tooth {
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 7px;
+}
+
+#tongue {
+    width: 110px;
+    height: 70px;
+    background-color: red;
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+}
